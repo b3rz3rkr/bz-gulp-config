@@ -108,7 +108,11 @@ const
 
     getLocalizationNames = localesDir => {
         const list = [];
-        fs.readdirSync(localesDir).forEach(file => list.push(path.parse(file).name));
+        try {
+            fs.readdirSync(localesDir).forEach(file => list.push(path.parse(file).name));
+        } catch (error) {
+            console.log(`Localization directory not found ${localesDir}`);
+        }
         return list;
     },
 
