@@ -167,23 +167,32 @@ const
         return new Promise((callback) => {
             const locales = getLocalizationNames(paths.src.localizations),
                 localization = getLocalizations(locales),
-                validLocales = validateLocalizations(locales, localization);
-            validLocales.forEach(locale => {
-                localization[locale]['locales'] = validLocales;
-                gulp.src(paths.src.html)
-                    .pipe(pug({
-                        locals: localization[locale]
-                    }))
-                    .on('error', (error) => {
-                        console.log(error);
-                    })
-                    .pipe(development(htmlPrettify({
-                        extra_liners: ['!--', 'head', 'body', '/html'],
-                        wrap_attributes: 'auto',
-                        wrap_line_length: 120
-                    })))
-                    .pipe(gulp.dest(pathBuild + 'html/' + locale));
-            });
+                validLocales = validateLocalizations(locales, localization),
+                launchPug = locale => {
+                    gulp.src(paths.src.html)
+                        .pipe(pug({
+                            locals: locale ? localization[locale] : null
+                        }))
+                        .on('error', (error) => {
+                            console.log(error);
+                        })
+                        .pipe(development(htmlPrettify({
+                            extra_liners: ['!--', 'head', 'body', '/html'],
+                            wrap_attributes: 'auto',
+                            wrap_line_length: 120
+                        })))
+                        .pipe(gulp.dest(locale ? `${pathBuild}html/${locale}` : `${pathBuild}html/`));
+                };
+
+            if (validLocales.length) {
+                validLocales.forEach(locale => {
+                    localization[locale]['locales'] = validLocales;
+                    launchPug(locale);
+                });
+            } else {
+                launchPug();
+            }
+
             callback();
         });
     },
