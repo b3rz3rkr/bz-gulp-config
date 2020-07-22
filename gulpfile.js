@@ -41,7 +41,11 @@ const
             videos: `${pathBuild}video/`
         },
         src: {
-            html: `${pathSource}pages/*.pug`,
+            html: [
+                `${pathSource}pages/**/*.pug`,
+                `!${pathSource}pages/parts/*.pug`,
+                `!${pathSource}pages/layouts/*.pug`
+            ],
             js: `${pathSource}js/main.js`,
             style: `${pathSource}scss/*.scss`,
             img: `${pathSource}img/**/*`,
