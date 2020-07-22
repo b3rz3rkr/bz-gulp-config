@@ -1,0 +1,34 @@
+{
+  "name": "bz-gulp-config",
+  "version": "1.0.0",
+  "description": "Gulp config to work with webpack, scss, pug and other stuff",
+  "main": "gulpfile.js",
+  "repository": "b3rz3rkr/bz-gulp-config",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Serhiy Tsarenko",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-environments": "^1.0.1",
+    "gulp-fonter": "^0.3.0",
+    "gulp-imagemin": "^6.2.0",
+    "gulp-pretty-html": "^2.0.10",
+    "gulp-pug": "^4.0.1",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-ttf2woff2": "^3.0.0",
+    "node-sass": "^4.14.1",
+    "scss-resets": "^0.5.2",
+    "webpack": "^4.43.0",
+    "webpack-stream": "^5.2.1"
+  },
+  "dependencies": {},
+  "browserslist": [
+    "> 2%"
+  ]
+}
