@@ -14,49 +14,51 @@ const
     ttf2woff2 = require('gulp-ttf2woff2'),
     del = require('del'),
     browserSync = require('browser-sync').create(),
-    development = environments.development,
-    production = environments.production,
-    reload = browserSync.reload,
     path = require('path'),
     fs = require('fs');
+
+const
+    development = environments.development,
+    production = environments.production,
+    reload = browserSync.reload;
 
 //configs
 const
     pathRoot = './',
-    pathBuild = pathRoot + 'build/' + (production() ? 'prod/' : 'dev/'),
-    pathSource = pathRoot + 'src/',
+    pathBuild = `${pathRoot}build/${production() ? 'prod/' : 'dev/'}`,
+    pathSource = `${pathRoot}src/`,
     projectFolder = path.basename(__dirname),
     paths = {
         build: {
-            js: pathBuild + 'js/',
-            style: pathBuild + 'css/',
-            img: pathBuild + 'img/',
-            fonts: pathBuild + 'fonts/',
-            manifest: pathBuild,
-            php: pathBuild,
-            videos: pathBuild + 'video/'
+            js: `${pathBuild}js/`,
+            style: `${pathBuild}css/`,
+            img: `${pathBuild}img/`,
+            fonts: `${pathBuild}fonts/`,
+            manifest: `${pathBuild}`,
+            php: `${pathBuild}`,
+            videos: `${pathBuild}video/`
         },
         src: {
-            html: pathSource + 'pages/*.pug',
-            js: pathSource + 'js/main.js',
-            style: pathSource + 'scss/*.scss',
-            img: pathSource + 'img/**/*',
-            fonts: pathSource + 'fonts/**/*',
-            manifest: pathSource + 'manifest/**/*',
-            php: pathSource + '**/*.php',
-            localizations: pathSource + 'localizations/',
-            videos: pathSource + 'video/**/*'
+            html: `${pathSource}pages/*.pug`,
+            js: `${pathSource}js/main.js`,
+            style: `${pathSource}scss/*.scss`,
+            img: `${pathSource}img/**/*`,
+            fonts: `${pathSource}fonts/**/*`,
+            manifest: `${pathSource}manifest/**/*`,
+            php: `${pathSource}**/*.php`,
+            localizations: `${pathSource}localizations/`,
+            videos: `${pathSource}video/**/*`
         },
         watch: {
-            html: pathSource + 'pages/**/*.pug',
-            js: pathSource + 'js/**/*.js',
-            style: pathSource + 'scss/**/*.scss',
-            img: pathSource + 'img/**/*.*',
-            fonts: pathSource + 'fonts/**/*.*',
-            manifest: pathSource + 'manifest/**/*',
-            php: pathSource + '**/*.php',
-            localizations: pathSource + 'localizations/*',
-            videos: pathSource + 'video/**/*'
+            html: `${pathSource}pages/**/*.pug`,
+            js: `${pathSource}js/**/*.js`,
+            style: `${pathSource}scss/**/*.scss`,
+            img: `${pathSource}img/**/*.*`,
+            fonts: `${pathSource}fonts/**/*.*`,
+            manifest: `${pathSource}manifest/**/*`,
+            php: `${pathSource}**/*.php`,
+            localizations: `${pathSource}localizations/*`,
+            videos: `${pathSource}video/**/*`
         },
         clean: pathBuild
     },
@@ -71,7 +73,7 @@ const
         mode: production() ? 'production' : 'development',
         devtool: development() ? 'source-map' : false,
 
-        //Internal or external Jquery plugin
+        //Internal or external jQuery plugin
         /*
         externals: {
             jquery: 'jQuery'
@@ -152,7 +154,7 @@ const
         browserSync.init({
             proxy: projectFolder + pathBuild
         });
-        browserSync.watch([pathBuild + '**/*.*', '!' + pathBuild + '**/*.css', '!' + pathBuild + '**/*.map'], reload);
+        browserSync.watch([`${pathBuild}**/*.*`, `!${pathBuild}**/*.css`, `!${pathBuild}**/*.map`], reload);
     },
 
     clear = () => del(pathBuild),
@@ -223,7 +225,7 @@ const
     },
 
     woff2 = () => {
-        return gulp.src(paths.build.fonts + '*.ttf')
+        return gulp.src(`${paths.build.fonts}*.ttf`)
             .pipe(ttf2woff2())
             .pipe(gulp.dest(paths.build.fonts));
     },
