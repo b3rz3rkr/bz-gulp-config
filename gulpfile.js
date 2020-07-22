@@ -24,10 +24,12 @@ const
 
 //configs
 const
+    domainsDirectory = 'W:\\domains',
     pathRoot = './',
     pathBuild = `${pathRoot}build/${production() ? 'prod/' : 'dev/'}`,
     pathSource = `${pathRoot}src/`,
     projectFolder = path.basename(__dirname),
+    projectPath = path.parse(__dirname).dir,
     paths = {
         build: {
             js: `${pathBuild}js/`,
@@ -155,10 +157,20 @@ const
     },
 
     server = () => {
-        browserSync.init({
-            proxy: projectFolder + pathBuild
-        });
-        browserSync.watch([`${pathBuild}**/*.*`, `!${pathBuild}**/*.css`, `!${pathBuild}**/*.map`], reload);
+        const options = {};
+        if (projectPath === domainsDirectory) {
+            options.proxy = projectFolder + pathBuild;
+        } else {
+            options.server = {
+                baseDir: pathBuild
+            };
+        }
+        browserSync.init(options);
+        browserSync.watch([
+            `${pathBuild}**/*.*`,
+            `!${pathBuild}**/*.css`,
+            `!${pathBuild}**/*.map`
+        ], reload);
     },
 
     clear = () => del(pathBuild),
@@ -181,7 +193,7 @@ const
                             wrap_attributes: 'auto',
                             wrap_line_length: 120
                         })))
-                        .pipe(gulp.dest(locale ? `${pathBuild}html/${locale}` : `${pathBuild}html/`));
+                        .pipe(gulp.dest(locale ? `${pathBuild}html/${locale}` : `${pathBuild}`));
                 };
 
             if (validLocales.length) {
@@ -252,6 +264,7 @@ const
         return gulp.src(paths.src.php)
             .pipe(gulp.dest(paths.build.php));
     },
+
     videos = () => {
         return gulp.src(paths.src.videos)
             .pipe(gulp.dest(paths.build.videos));
