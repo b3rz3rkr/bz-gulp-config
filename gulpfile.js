@@ -205,7 +205,7 @@ const
 
     scripts = () => {
         return new Promise((callback) => {
-            gulp.src(paths.src.js)
+            gulp.src(paths.src.js, {allowEmpty: true})
                 .pipe(webpackStream(webpackConfig, webpack))
                 .pipe(gulp.dest(paths.build.js));
             callback();
