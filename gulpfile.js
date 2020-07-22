@@ -116,11 +116,11 @@ const
         const localizations = {};
 
         locales.forEach(locale => {
-            const filePath = paths.src.localizations + locale + '.json';
+            const filePath = `${paths.src.localizations + locale}.json`;
             try {
                 localizations[locale] = requireUncached(filePath);
             } catch (error) {
-                console.log(' Error in localization file ' + filePath);
+                console.log(`Error in localization file ${filePath}`);
             }
         });
         return localizations;
